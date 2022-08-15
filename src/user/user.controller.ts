@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Version,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 /**
  * Controller是一个装饰器
  * 'user'相当于路由前缀
+ * Version是版本号装饰器，使用了之后需要携带版本号才能正常进行Http请求
  */
 @Controller('user')
 export class UserController {
@@ -25,6 +27,7 @@ export class UserController {
   }
 
   @Get()
+  @Version('1')
   findAll() {
     return this.userService.findAll();
   }
