@@ -21,12 +21,40 @@
 
 ## 笔记
 
-- 使用命令创建user.constroller.ts文件，`co`是 `controller的别名`
+- 使用命令创建`user.constroller.ts`文件，co是 controller的别名
 
 ```bash
 $ nest g co user = $ nest g controller user
 ```
 
+- 使用命令直接新建关于`user`，`CURD`的四个模块，减少工作量
+
+```shell
+$ nest g resource user
+```
+
+- nest内置两个框架：`Express`以及`Fastify`，框架默认使用的是`Express`
+  - `Express`：
+  - `Fastify`：`Fastify`与其他主流 `HTTP` 框架对比，其在 `QPS`(并发处理请求)的效率上要远超其他框架，达到了几乎两倍的基准测试结果
+- 替换模块框架，首先，安装对应的适配器依赖 `yarn add @nestjs/platform-fastify`
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
+  await app.listen(3000);
+}
+bootstrap();
+```
 ## Installation
 
 ```bash
