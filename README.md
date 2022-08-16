@@ -21,7 +21,7 @@
 
 ## 笔记
 
-- 使用命令创建`user.constroller.ts`文件，co是 controller的别名
+- 使用命令创建`user.controller.ts`文件，co是 controller的别名
 
 ```bash
 $ nest g co user = $ nest g controller user
@@ -55,6 +55,9 @@ async function bootstrap() {
 }
 bootstrap();
 ```
+- 进行多环境配置`yarn add @nestjs/config`
+- `@nestjs/config` 默认会从项目根目录载入并解析一个`.env`文件，从`.env`文件和 `process.env` 合并环境变量键值对，并将结果存储到一个可以通过`ConfigService`访问的私有结构。
+
 ## Installation
 
 ```bash
