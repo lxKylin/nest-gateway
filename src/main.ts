@@ -14,6 +14,8 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { AllExceptionsFilter } from './common/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
 
+import { generateDocument } from './doc';
+
 declare const module: any;
 
 async function bootstrap() {
@@ -38,6 +40,9 @@ async function bootstrap() {
 
   // 异常过滤器 useGlobalFilters 全局异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+
+  // 创建swagger文档
+  generateDocument(app);
 
   // 添加热更新
   if (module.hot) {
