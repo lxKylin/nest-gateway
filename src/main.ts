@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core';
 
 import {
   FastifyAdapter,
-  NestFastifyApplication,
+  NestFastifyApplication
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from './app.module';
@@ -14,10 +14,12 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { AllExceptionsFilter } from './common/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
 
+declare const module: any;
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter()
   );
 
   // 设置全局路由前缀
@@ -28,7 +30,7 @@ async function bootstrap() {
     // 全局配置请求配置
     // defaultVersion: '1',
     defaultVersion: [VERSION_NEUTRAL, '1', '2'],
-    type: VersioningType.URI,
+    type: VersioningType.URI
   });
 
   // 统一响应体格式 useGlobalInterceptors 全局拦截器
@@ -36,6 +38,12 @@ async function bootstrap() {
 
   // 异常过滤器 useGlobalFilters 全局异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+
+  // 添加热更新
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 
   await app.listen(1029, () => {
     console.log(`项目运行在http://localhost:1029`);
