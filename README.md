@@ -56,6 +56,7 @@ async function bootstrap() {
 bootstrap();
 ```
 - 进行多环境配置`yarn add @nestjs/config`
+- `Nest`默认使用`dotenv`进行解析环境配置
 - `@nestjs/config` 默认会从项目根目录载入并解析一个`.env`文件，从`.env`文件和 `process.env` 合并环境变量键值对，并将结果存储到一个可以通过`ConfigService`访问的私有结构。
 
 ## Installation

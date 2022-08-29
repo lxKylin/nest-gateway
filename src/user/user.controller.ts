@@ -7,13 +7,15 @@ import {
   Param,
   Delete,
   Version,
-  VERSION_NEUTRAL,
+  VERSION_NEUTRAL
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 import { BusinessException } from 'src/common/exceptions/business.exception';
+
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Controller是一个装饰器
@@ -24,13 +26,17 @@ import { BusinessException } from 'src/common/exceptions/business.exception';
 // 对整个Controller进行版本控制
 @Controller({
   path: 'user',
-  version: '1',
+  version: '1'
 })
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly configService: ConfigService
+  ) {}
 
   // 伪造业务异常场景
   @Get('findBusinessError')
+  // 不需要携带版本或默认指定版本1
   @Version([VERSION_NEUTRAL, '1'])
   findBusinessError() {
     const a: any = {};
@@ -40,6 +46,10 @@ export class UserController {
       throw new BusinessException('你这个参数错了');
     }
     return this.userService.findAll();
+  }
+  @Get('getTestName')
+  getTestName() {
+    return this.configService.get('TEST_VALUE').name;
   }
 
   @Post()

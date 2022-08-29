@@ -20,6 +20,9 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  // 设置全局路由前缀
+  app.setGlobalPrefix('api');
+
   // 接口版本化管理
   app.enableVersioning({
     // 全局配置请求配置
@@ -34,8 +37,8 @@ async function bootstrap() {
   // 异常过滤器 useGlobalFilters 全局异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
-  await app.listen(3000, () => {
-    console.log(`项目运行在http://localhost:3000`);
+  await app.listen(1029, () => {
+    console.log(`项目运行在http://localhost:1029`);
   });
 }
 
