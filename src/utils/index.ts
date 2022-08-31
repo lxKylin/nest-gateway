@@ -1,3 +1,6 @@
+/**
+ * 读取YAML配置文件的方法
+ */
 import { parse } from 'yaml';
 const path = require('path');
 const fs = require('fs');
