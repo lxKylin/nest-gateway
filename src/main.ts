@@ -1,5 +1,9 @@
 // 替换使用Fastify
-import { VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
+import {
+  ValidationPipe,
+  VersioningType,
+  VERSION_NEUTRAL
+} from '@nestjs/common';
 
 import { NestFactory } from '@nestjs/core';
 
@@ -40,6 +44,9 @@ async function bootstrap() {
 
   // 异常过滤器 useGlobalFilters 全局异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+
+  // 启动全局字段校验，保证请求接口字段校验正确
+  app.useGlobalPipes(new ValidationPipe());
 
   // 创建swagger文档
   generateDocument(app);
