@@ -9,6 +9,7 @@ const { MONGODB_CONFIG } = getConfig();
 const MONGODB_DATABASE_CONFIG = {
   ...MONGODB_CONFIG,
   type: databaseType,
+  // entities：只要是以 entity.ts 结尾的实例类，都会被自动扫描识别，并在数据库中生成对应的实体表。
   entities: [
     path.join(
       __dirname,
