@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 // 自定义配置项使用环境变量
 import { getConfig } from './utils';
+//
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   // 使用默认环境配置 dotenv进行解析
@@ -15,7 +17,12 @@ import { getConfig } from './utils';
   imports: [
     // 全局配置缓存
     CacheModule.register({
-      isGlobal: true
+      isGlobal: true,
+      store: redisStore,
+      host: getConfig('REDIS_CONFIG').host,
+      port: getConfig('REDIS_CONFIG').port,
+      auth_pass: getConfig('REDIS_CONFIG').auth,
+      db: getConfig('REDIS_CONFIG').db
     }),
     ConfigModule.forRoot({
       ignoreEnvFile: true,
