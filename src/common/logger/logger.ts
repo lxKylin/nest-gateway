@@ -10,6 +10,7 @@ import { LogStream } from './logStream';
 const multiStream = require('pino-multi-stream').multistream;
 
 function asReqValue(req) {
+  console.log(req, 'req');
   if (req.raw) {
     req = req.raw;
   }
