@@ -59,6 +59,64 @@ bootstrap();
 - `Nest`默认使用`dotenv`进行解析环境配置
 - `@nestjs/config` 默认会从项目根目录载入并解析一个`.env`文件，从`.env`文件和 `process.env` 合并环境变量键值对，并将结果存储到一个可以通过`ConfigService`访问的私有结构。
 
+### extends和implements的区别
+- `extends`：继承：一个新的接口或者类，从父类或者接口继承所有的属性和方法，不可以重写属性，但可以重写方法
+- `implements`：实现：实现，一个新的类，从父类或者接口实现所有的属性和方法，同时可以重写属性和方法，包含一些新的功能
+
+- 相同点
+  - 都可以实现 类与类 之间的关联
+  - 对于抽象类中的抽象方法都必须要实现
+
+- 下面罗列它俩的不同点
+  - extends可以实现 接口与接口，接口与类 的继承，而implements不能实现接口与接口，接口与类的实现
+  - implements可以实现 类实现接口，而extends不能实现类继承接口
+  - 使用implements时，需要定义或实现所有属性和方法，而extends只需要重新定义或者实现方法即可，对于属性来说，是可以直接继承，无需单独定义
+  
+- 举例来说，门是一个类，防盗门是门的子类。如果防盗门有一个报警器的功能，我们可以简单的给防盗门添加一个报警方法。这时候如果有另一个类，车，也有报警器的功能，就可以考虑把报警器提取出来，作为一个接口，防盗门和车都去实现它：
+```ts
+interface Alarm {
+    alert(): void;
+}
+
+class Door {
+}
+
+class SecurityDoor extends Door implements Alarm {
+    alert() {
+        console.log('SecurityDoor alert');
+    }
+}
+
+class Car implements Alarm {
+    alert() {
+        console.log('Car alert');
+    }
+}
+```
+- 一个类可以实现多个接口：
+```ts
+interface Alarm {
+    alert(): void;
+}
+
+interface Light {
+    lightOn(): void;
+    lightOff(): void;
+}
+
+class Car implements Alarm, Light {
+    alert() {
+        console.log('Car alert');
+    }
+    lightOn() {
+        console.log('Car light on');
+    }
+    lightOff() {
+        console.log('Car light off');
+    }
+}
+
+```
 ## Installation
 
 ```bash

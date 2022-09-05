@@ -1,8 +1,8 @@
 // 替换使用Fastify
 import {
   ValidationPipe,
-  VersioningType,
-  VERSION_NEUTRAL
+  VersioningType, // 接口版本控制
+  VERSION_NEUTRAL // 接口版本控制
 } from '@nestjs/common';
 
 import { NestFactory } from '@nestjs/core';
