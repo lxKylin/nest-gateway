@@ -48,47 +48,4 @@ export class UserController {
   create(@Body() user: CreateUserDto) {
     return this.userService.createOrSave(user);
   }
-
-  // 伪造业务异常场景
-  @Get('findBusinessError')
-  // 不需要携带版本或默认指定版本1
-  @Version([VERSION_NEUTRAL, '1'])
-  findBusinessError() {
-    const a: any = {};
-    try {
-      console.log(a.b.c);
-    } catch (error) {
-      throw new BusinessException('你这个参数错了');
-    }
-    return this.userService.findAll();
-  }
-  @Get('getTestName')
-  getTestName() {
-    return this.configService.get('TEST_VALUE').name;
-  }
-
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
-
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
 }

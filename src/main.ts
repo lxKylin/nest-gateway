@@ -23,6 +23,8 @@ import { FastifyLogger } from './common/logger';
 
 import { generateDocument } from './doc';
 
+import fastifyCookie from '@fastify/cookie';
+
 declare const module: any;
 
 async function bootstrap() {
@@ -34,6 +36,10 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(fastifyInstance)
   );
+
+  app.register(fastifyCookie, {
+    secret: 'my-secret' // for cookies signature
+  });
 
   // 设置全局路由前缀
   app.setGlobalPrefix('api');

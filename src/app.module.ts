@@ -1,6 +1,6 @@
 import { CacheModule, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 // 进行多环境配置
 import { ConfigModule } from '@nestjs/config';
@@ -8,6 +8,10 @@ import { ConfigModule } from '@nestjs/config';
 import { getConfig } from './utils';
 //
 import * as redisStore from 'cache-manager-redis-store';
+
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   // 使用默认环境配置 dotenv进行解析
@@ -30,9 +34,17 @@ import * as redisStore from 'cache-manager-redis-store';
       // load 方法中传入的 getConfig 是一个函数，并不是直接 JSON 格式的配置对象，直接添加变量会报错。
       load: [getConfig]
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [],
+  // controllers: [AppController],
+  // providers: [AppService]
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard
+    }
+  ]
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import {
   getUserAccessToken,
   getUserToken,
   refreshUserToken
-} from 'src/helper/feishu/auth';
+} from '@/helper/feishu/auth';
 import { Cache } from 'cache-manager';
 import { BusinessException } from '@/common/exceptions/business.exception';
 import { BUSINESS_ERROR_CODE } from '@/common/exceptions/business.error.codes';
