@@ -7,8 +7,7 @@ import {
   Catch,
   ArgumentsHost,
   HttpStatus,
-  ServiceUnavailableException,
-  HttpException,
+  ServiceUnavailableException
 } from '@nestjs/common';
 
 @Catch()
@@ -25,7 +24,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       statusCode: HttpStatus.SERVICE_UNAVAILABLE,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: new ServiceUnavailableException().getResponse(),
+      message: new ServiceUnavailableException().getResponse()
     });
   }
 }
